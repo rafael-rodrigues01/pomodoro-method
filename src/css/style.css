@@ -8,6 +8,7 @@ body {
 .nav {
     background-color: rgb(87, 8, 8);
     width: 100vw;
+    padding-left: 2rem;
 }
 
 .nav h3 {
@@ -15,6 +16,7 @@ body {
 }
 
 .container {
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
