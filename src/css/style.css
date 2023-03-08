@@ -44,7 +44,13 @@ body {
 
 .container .main-card .card .form-numbers {
     display: flex;
+    align-items: center;
     margin: auto;
+}
+
+.container .main-card .card .form-numbers p {
+    font-size: 4rem;
+    color: #000000;
 }
 
 .container .main-card .card .off {
