@@ -9,6 +9,8 @@ const intervalText = document.getElementById('interval')
 const formTimer = document.getElementById('timer')
 const formIntervalTimer = document.getElementById('interval-timer')
 
+alert('oii')
+
 
 
 const btnPlay = document.querySelector(".btn-play");
