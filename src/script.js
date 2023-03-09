@@ -2,13 +2,31 @@ let minutesInput = document.querySelector(".minutes");
 
 let secondsInput = document.querySelector(".seconds");
 
+const sessionText = document.getElementById('session')
+
+const intervalText = document.getElementById('interval')
+
+const formTimer = document.getElementById('timer')
+const formIntervalTimer = document.getElementById('interval-timer')
+
+
+
 const btnPlay = document.querySelector(".btn-play");
 
 let bellAudio = new Audio("./audio/audio_bell.mp3");
 
-console.log(minutesInput);
-
 let boolean = false
+
+const intervalTimer = () => {
+  sessionText.classList.add('off')
+  intervalText.classList.remove('off')
+  formTimer.classList.add('off')
+  formIntervalTimer.classList.remove('off')
+
+  boolean = false
+  startPomodoroSection()
+
+}
 
 const startPomodoroSection = () => {
   if (boolean) {
@@ -58,6 +76,8 @@ const startPomodoroSection = () => {
         clearInterval(seg_interval);
 
         bellAudio.play();
+
+        intervalTimer()
       }
       seconds = 60;
     }
