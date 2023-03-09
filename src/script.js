@@ -1,12 +1,22 @@
 let minutesInput = document.querySelector(".minutes");
+
 let secondsInput = document.querySelector(".seconds");
 
 const btnPlay = document.querySelector(".btn-play");
 
 let bellAudio = new Audio("./audio/audio_bell.mp3");
 
-console.log(secondsInput.innerHTML);
+console.log(minutesInput);
+
+let boolean = false
+
 const startPomodoroSection = () => {
+  if (boolean) {
+    return
+  }
+  boolean = true
+
+  minutesInput.setAttribute('readonly', true);
 
     
   localStorage.setItem("minutesInput", String(minutesInput.value));
