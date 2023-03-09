@@ -41,7 +41,12 @@ const startPomodoroSection = () => {
 
   let min = Number(localStorage.getItem("minutesInput"));
 
-  min -= 1;
+  if (min === 0) {
+    minutesInput.value = min
+  } else {
+    min -= 1;
+  }
+
   seconds = 59;
 
   if (min < 10) {
@@ -52,6 +57,7 @@ const startPomodoroSection = () => {
   secondsInput.value = seconds;
 
   const minTimer = () => {
+
     if (min >= 10) {
         min -= 1
       minutesInput.value = min;
