@@ -117,7 +117,7 @@ footer {
     text-align: center;
 }
 
-footer .btn-play, .btn-pause {
+footer .btn-play, .btn-reset {
     font-size: 2rem;
     background-color: rgb(87, 8, 8);
     color: #ffffff;
