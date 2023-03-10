@@ -1,16 +1,26 @@
-let minutesInput = document.querySelector(".minutes");
+let sessionDuration = document.querySelector(".minutes");
+let intervalDuration = document.getElementById('interval-input')
 
-let secondsInput = document.querySelector(".seconds");
+let secondInput = document.querySelector(".seconds");
 
 const sessionText = document.getElementById('session')
-
 const intervalText = document.getElementById('interval')
 
 const formTimer = document.getElementById('timer')
 const formIntervalTimer = document.getElementById('interval-timer')
 
-minutesInput.addEventListener('input', () => {
-  const value = parseInt(minutesInput.value)
+const btnPlay = document.querySelector(".btn-play");
+
+const breakLength = document.querySelectorAll('.btn')
+console.log(breakLength);
+breakLength.forEach
+
+
+
+
+
+const validateMinutes = (input, event) => {
+  const value = parseInt(event.target.value)
 
   if (value !== 0) {
     btnPlay.disabled = false
@@ -19,19 +29,24 @@ minutesInput.addEventListener('input', () => {
   }
 
   if (value < 0) {
-    value = 59
+    input.value = 59
   }
 
   if (value > 59) {
-    value = 00
+    input.value = 00
   }
+}
+
+sessionDuration.addEventListener('input', (event) => {
+  validateMinutes(sessionDuration, event)
+})
+intervalDuration.addEventListener('input', (event) => {
+  validateMinutes(intervalDuration, event)
 })
 
 
 
 
-const btnPlay = document.querySelector(".btn-play");
-console.log(btnPlay);
 
 let bellAudio = new Audio("./audio/audio_bell.mp3");
 
@@ -40,51 +55,51 @@ let boolean = false
 const intervalTimer = () => {
   sessionText.classList.add('off')
   intervalText.classList.remove('off')
-  formTimer.classList.add('off')
+  minutesInput.classList.add('off')
   formIntervalTimer.classList.remove('off')
   boolean = false
-  minutesInput.value = document.querySelector('.minutes').value
-  startPomodoroSection()
+  startPomodoroSection(minutesInterval.value, minutesInterval)
 }
 
-const startPomodoroSection = () => {
+const startPomodoroSection = (minutes, inputElement) => {
   if (boolean) {
     return
   }
   boolean = true
 
-  minutesInput.setAttribute('readonly', true);
-
-    let min = document.querySelector('.minutes').value
-  // localStorage.setItem("minutesInput", String(minutesInput.value));
+  inputElement.setAttribute('readonly', true);
 
   
-  // let min = Number(localStorage.getItem("minutesInput"));
+    // let min = document.querySelector('.minutes').value
+  // localStorage.setItem("inputElement", String(inputElement.value));
 
-  if (min === 0) {
-    minutesInput.value = '0' + 0
+  
+  // let min = Number(localStorage.getItem("inputElement"));
+
+  if (minutes === 0) {
+    inputElement.value = '0' + 0
     return
   } else {
-    min -= 1;
+    minutes -= 1;
   }
 
   seconds = 59;
 
-  if (min < 10) {
-    min = "0" + min;
+  if (minutes < 10) {
+    minutes = "0" + minutes;
   }
 
-  minutesInput.value = min;
-  secondsInput.value = seconds;
+  inputElement.value = minutes;
+  secondInput.value = seconds;
 
   const minTimer = () => {
 
-    if (min >= 10) {
-        min -= 1
-      minutesInput.value = min;
+    if (minutes >= 10) {
+        minutes -= 1
+      inputElement.value = minutes;
     } else {
-      min -= 1;
-      minutesInput.value = "0" + min;
+      minutes -= 1;
+      inputElement.value = "0" + minutes;
     }
   };
 
@@ -92,13 +107,13 @@ const startPomodoroSection = () => {
     seconds -= 1;
 
     if (seconds >= 10) {
-      secondsInput.value = seconds;
+      secondInput.value = seconds;
     } else {
-        secondsInput.value = "0" + seconds;
+        secondInput.value = "0" + seconds;
     }
 
     if (seconds <= 0) {
-      if (min <= 0) {
+      if (minutes <= 0) {
         clearInterval(min_interval);
         clearInterval(seg_interval);
 
@@ -115,4 +130,6 @@ const startPomodoroSection = () => {
   const seg_interval = setInterval(segTimer, 1000);
 };
 
-btnPlay.addEventListener("click", startPomodoroSection);
+btnPlay.addEventListener("click", () => {
+  startPomodoroSection(sessionDuration.value, sessionDuration)
+});
