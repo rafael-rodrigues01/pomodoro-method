@@ -10,17 +10,28 @@ const formTimer = document.getElementById('timer')
 const formIntervalTimer = document.getElementById('interval-timer')
 
 minutesInput.addEventListener('input', () => {
-  if (minutesInput.value < 0) {
-    minutesInput.value = 59
+  const value = parseInt(minutesInput.value)
+
+  if (value !== 0) {
+    btnPlay.disabled = false
+  }else {
+    btnPlay.disabled = true
   }
-  if (minutesInput.value > 59) {
-    minutesInput.value = 00
+
+  if (value < 0) {
+    value = 59
+  }
+
+  if (value > 59) {
+    value = 00
   }
 })
 
 
 
+
 const btnPlay = document.querySelector(".btn-play");
+console.log(btnPlay);
 
 let bellAudio = new Audio("./audio/audio_bell.mp3");
 
@@ -31,10 +42,9 @@ const intervalTimer = () => {
   intervalText.classList.remove('off')
   formTimer.classList.add('off')
   formIntervalTimer.classList.remove('off')
-
   boolean = false
+  minutesInput.value = document.querySelector('.minutes').value
   startPomodoroSection()
-
 }
 
 const startPomodoroSection = () => {
@@ -45,14 +55,15 @@ const startPomodoroSection = () => {
 
   minutesInput.setAttribute('readonly', true);
 
-    
-  localStorage.setItem("minutesInput", String(minutesInput.value));
+    let min = document.querySelector('.minutes').value
+  // localStorage.setItem("minutesInput", String(minutesInput.value));
 
   
-  let min = Number(localStorage.getItem("minutesInput"));
+  // let min = Number(localStorage.getItem("minutesInput"));
 
   if (min === 0) {
-    minutesInput.value = min
+    minutesInput.value = '0' + 0
+    return
   } else {
     min -= 1;
   }
