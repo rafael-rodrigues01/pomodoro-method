@@ -23,7 +23,7 @@
           <p id="interval" class="off">Interval</p>
           <p id="session">Session</p>
           <form id="timer" class="form-numbers">
-            <input id="session-input" type="number" class="minutes"   value="25" />
+            <input id="session-input" type="number" class="minutes"   value="0" />
             <input id="interval-input" type="number" class="minutes off" value="05">
             <p>:</p>
             <input type="number" class="seconds" value="00" readonly />
@@ -39,7 +39,7 @@
           <div class="card-bottom-left">
             <div class="controls-timer">
               <button id="first-btn" class="btn">-</button>
-              <p>5</p>
+              <p id="break-length">5</p>
               <button id="second-btn" class="btn">+</button>
             </div>
             <p>BREAK LENGTH</p>
@@ -48,7 +48,7 @@
           <div class="card-bottom-right">
             <div class="controls-timer">
               <button id="third-btn" class="btn">-</button>
-              <p>25</p>
+              <p id="session-length">25</p>
               <button id="four-btn" class="btn">+</button>
             </div>
             <p>SESSION LENGTH</p>
@@ -57,7 +57,7 @@
 
         <footer>
           <button class="btn-play">Play</button>
-          <button class="btn-pause">Pause</button>
+          <button class="btn-pause">Reset</button>
         </footer>
       </section>
     </main>
