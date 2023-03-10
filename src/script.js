@@ -9,7 +9,14 @@ const intervalText = document.getElementById('interval')
 const formTimer = document.getElementById('timer')
 const formIntervalTimer = document.getElementById('interval-timer')
 
-alert('oii')
+minutesInput.addEventListener('input', () => {
+  if (minutesInput.value < 0) {
+    minutesInput.value = 59
+  }
+  if (minutesInput.value > 59) {
+    minutesInput.value = 00
+  }
+})
 
 
 
@@ -41,6 +48,7 @@ const startPomodoroSection = () => {
     
   localStorage.setItem("minutesInput", String(minutesInput.value));
 
+  
   let min = Number(localStorage.getItem("minutesInput"));
 
   if (min === 0) {
