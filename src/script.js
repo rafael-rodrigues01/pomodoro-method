@@ -14,11 +14,13 @@ const breakLengthInput = document.getElementById('interval-input')
 const buttons = document.querySelectorAll('.btn')
 console.log(buttons);
 
+let paragraphSessionLength = document.getElementById('session-length')
+    const paragraphBreakLength = document.getElementById('break-length')
+
 buttons.forEach(button => {
   button.addEventListener('click', () => {
     const btnId = button.id
-    console.log(btnId);
-    const btnOperatorBreakLength = button.textContent
+
     switch(btnId){
       case 'first-btn':
         breakLengthInput.value--
@@ -32,6 +34,32 @@ buttons.forEach(button => {
       case 'four-btn':
         sessionLengthInput.value++
     }
+
+    
+
+    console.log(paragraphSessionLength.innerHTML);
+
+    paragraphSessionLength.innerHTML = sessionLengthInput.value
+    paragraphBreakLength.innerHTML = breakLengthInput.value
+
+    if (paragraphSessionLength.innerHTML < 0) {
+      sessionLengthInput.value = 59
+      paragraphSessionLength.innerHTML = 59
+    }
+    if(paragraphSessionLength.innerHTML > 59) {
+      sessionLengthInput.value = 00
+      paragraphSessionLength.innerHTML = 00
+    }
+
+    if (paragraphBreakLength.innerHTML < 0) {
+      breakLengthInput.value = 59
+      paragraphBreakLength.innerHTML = 59
+    }
+    if (paragraphBreakLength.innerHTML > 59) {
+      breakLengthInput.value = 00
+      paragraphBreakLength.innerHTML = 00
+    }
+   
   })
 })
 
@@ -50,11 +78,22 @@ const validateMinutes = (input, event) => {
 
   if (value < 0) {
     input.value = 59
+    paragraphSessionLength.innerHTML = 59
+    return
   }
 
   if (value > 59) {
     input.value = 00
+    paragraphSessionLength.innerHTML = 00
+    return
   }
+
+  if(isNaN(value)) {
+    return
+  }
+
+
+  paragraphSessionLength.innerHTML = value
 }
 
 sessionDuration.addEventListener('input', (event) => {
@@ -87,21 +126,25 @@ const startPomodoroSection = (minutes, inputElement) => {
   }
   boolean = true
 
-  inputElement.setAttribute('readonly', true);
-
   
+
     // let min = document.querySelector('.minutes').value
   // localStorage.setItem("inputElement", String(inputElement.value));
 
   
   // let min = Number(localStorage.getItem("inputElement"));
 
-  if (minutes === 0) {
+  if (minutes == 0) {
     inputElement.value = '0' + 0
     return
   } else {
     minutes -= 1;
   }
+
+  inputElement.setAttribute('readonly', true);
+  buttons.forEach(button => {
+    button.disabled = true
+  })
 
   seconds = 59;
 
