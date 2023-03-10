@@ -6,16 +6,36 @@ let secondInput = document.querySelector(".seconds");
 const sessionText = document.getElementById('session')
 const intervalText = document.getElementById('interval')
 
-const formTimer = document.getElementById('timer')
-const formIntervalTimer = document.getElementById('interval-timer')
+
+const sessionLengthInput = document.getElementById('session-input')
+
+const breakLengthInput = document.getElementById('interval-input')
+
+const buttons = document.querySelectorAll('.btn')
+console.log(buttons);
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    const btnId = button.id
+    console.log(btnId);
+    const btnOperatorBreakLength = button.textContent
+    switch(btnId){
+      case 'first-btn':
+        breakLengthInput.value--
+        break;
+      case 'second-btn':
+        breakLengthInput.value++
+        break;
+      case 'third-btn':
+        sessionLengthInput.value--
+        break;
+      case 'four-btn':
+        sessionLengthInput.value++
+    }
+  })
+})
 
 const btnPlay = document.querySelector(".btn-play");
-
-const breakLength = document.querySelectorAll('.btn')
-console.log(breakLength);
-breakLength.forEach
-
-
 
 
 
@@ -55,10 +75,10 @@ let boolean = false
 const intervalTimer = () => {
   sessionText.classList.add('off')
   intervalText.classList.remove('off')
-  minutesInput.classList.add('off')
-  formIntervalTimer.classList.remove('off')
+  sessionDuration.classList.add('off')
+  intervalDuration.classList.remove('off')
   boolean = false
-  startPomodoroSection(minutesInterval.value, minutesInterval)
+  startPomodoroSection(intervalDuration.value, intervalDuration)
 }
 
 const startPomodoroSection = (minutes, inputElement) => {
