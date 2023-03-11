@@ -1,150 +1,146 @@
 let sessionDuration = document.querySelector(".minutes");
-let intervalDuration = document.getElementById('interval-input')
+let intervalDuration = document.getElementById("interval-input");
 
 let secondInput = document.querySelector(".seconds");
 
-const sessionText = document.getElementById('session')
-const intervalText = document.getElementById('interval')
+const sessionText = document.getElementById("session");
+const intervalText = document.getElementById("interval");
 
+const sessionLengthInput = document.getElementById("session-input");
 
-const sessionLengthInput = document.getElementById('session-input')
+const breakLengthInput = document.getElementById("interval-input");
 
-const breakLengthInput = document.getElementById('interval-input')
-
-const buttons = document.querySelectorAll('.btn')
+const btnPlay = document.querySelector(".btn-play");
+const btnReset = document.querySelector(".btn-reset");
+const buttons = document.querySelectorAll(".btn");
 console.log(buttons);
 
-let paragraphSessionLength = document.getElementById('session-length')
-    const paragraphBreakLength = document.getElementById('break-length')
+let paragraphSessionLength = document.getElementById("session-length");
+const paragraphBreakLength = document.getElementById("break-length");
 
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    const btnId = button.id
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const btnId = button.id;
 
-    switch(btnId){
-      case 'first-btn':
-        breakLengthInput.value--
+    switch (btnId) {
+      case "first-btn":
+        breakLengthInput.value--;
         break;
-      case 'second-btn':
-        breakLengthInput.value++
+      case "second-btn":
+        breakLengthInput.value++;
         break;
-      case 'third-btn':
-        sessionLengthInput.value--
+      case "third-btn":
+        sessionLengthInput.value--;
         break;
-      case 'four-btn':
-        sessionLengthInput.value++
+      case "four-btn":
+        sessionLengthInput.value++;
     }
 
-    
-
-    console.log(paragraphSessionLength.innerHTML);
-
-    paragraphSessionLength.innerHTML = sessionLengthInput.value
-    paragraphBreakLength.innerHTML = breakLengthInput.value
+    paragraphSessionLength.innerHTML = sessionLengthInput.value;
+    paragraphBreakLength.innerHTML = breakLengthInput.value;
 
     if (paragraphSessionLength.innerHTML < 0) {
-      sessionLengthInput.value = 59
-      paragraphSessionLength.innerHTML = 59
+      sessionLengthInput.value = 59;
+      paragraphSessionLength.innerHTML = 59;
     }
-    if(paragraphSessionLength.innerHTML > 59) {
-      sessionLengthInput.value = 00
-      paragraphSessionLength.innerHTML = 00
+    if (paragraphSessionLength.innerHTML > 59) {
+      sessionLengthInput.value = 00;
+      paragraphSessionLength.innerHTML = 00;
     }
 
     if (paragraphBreakLength.innerHTML < 0) {
-      breakLengthInput.value = 59
-      paragraphBreakLength.innerHTML = 59
+      breakLengthInput.value = 59;
+      paragraphBreakLength.innerHTML = 59;
     }
     if (paragraphBreakLength.innerHTML > 59) {
-      breakLengthInput.value = 00
-      paragraphBreakLength.innerHTML = 00
+      breakLengthInput.value = 00;
+      paragraphBreakLength.innerHTML = 00;
     }
-   
-  })
-})
+  });
+});
 
-const btnPlay = document.querySelector(".btn-play");
+const reset = () => {
+  secondInput.value = 0;
+  breakLengthInput.value = 0;
+  sessionLengthInput.value = 0;
+  paragraphBreakLength.innerHTML = 0;
+  paragraphSessionLength.innerHTML = 0;
+};
 
-
+btnReset.addEventListener("click", reset);
 
 const validateMinutes = (input, event) => {
-  const value = parseInt(event.target.value)
+  const value = parseInt(event.target.value);
 
   if (value !== 0) {
-    btnPlay.disabled = false
-  }else {
-    btnPlay.disabled = true
+    btnPlay.disabled = false;
+  } else {
+    btnPlay.disabled = true;
   }
 
   if (value < 0) {
-    input.value = 59
-    paragraphSessionLength.innerHTML = 59
-    return
+    input.value = 59;
+    paragraphSessionLength.innerHTML = 59;
+    return;
   }
 
   if (value > 59) {
-    input.value = 00
-    paragraphSessionLength.innerHTML = 00
-    return
+    input.value = 00;
+    paragraphSessionLength.innerHTML = 00;
+    return;
   }
 
-  if(isNaN(value)) {
-    return
+  if (isNaN(value)) {
+    return;
   }
 
+  paragraphSessionLength.innerHTML = value;
+};
 
-  paragraphSessionLength.innerHTML = value
-}
-
-sessionDuration.addEventListener('input', (event) => {
-  validateMinutes(sessionDuration, event)
-})
-intervalDuration.addEventListener('input', (event) => {
-  validateMinutes(intervalDuration, event)
-})
-
-
-
-
+sessionDuration.addEventListener("input", (event) => {
+  validateMinutes(sessionDuration, event);
+});
+intervalDuration.addEventListener("input", (event) => {
+  validateMinutes(intervalDuration, event);
+});
 
 let bellAudio = new Audio("./audio/audio_bell.mp3");
 
-let boolean = false
+let boolean = false;
 
 const intervalTimer = () => {
-  sessionText.classList.add('off')
-  intervalText.classList.remove('off')
-  sessionDuration.classList.add('off')
-  intervalDuration.classList.remove('off')
-  boolean = false
-  startPomodoroSection(intervalDuration.value, intervalDuration)
-}
+  sessionText.classList.add("off");
+  intervalText.classList.remove("off");
+  sessionDuration.classList.add("off");
+  intervalDuration.classList.remove("off");
+  boolean = false;
+  startPomodoroSection(intervalDuration.value, intervalDuration);
+};
+
+let sessionCount = 0;
 
 const startPomodoroSection = (minutes, inputElement) => {
   if (boolean) {
-    return
+    return;
   }
-  boolean = true
+  boolean = true;
 
-  
-
-    // let min = document.querySelector('.minutes').value
+  // let min = document.querySelector('.minutes').value
   // localStorage.setItem("inputElement", String(inputElement.value));
 
-  
   // let min = Number(localStorage.getItem("inputElement"));
 
   if (minutes == 0) {
-    inputElement.value = '0' + 0
-    return
+    inputElement.value = "0" + 0;
+    return;
   } else {
     minutes -= 1;
   }
 
-  inputElement.setAttribute('readonly', true);
-  buttons.forEach(button => {
-    button.disabled = true
-  })
+  inputElement.setAttribute("readonly", true);
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
 
   seconds = 59;
 
@@ -156,9 +152,8 @@ const startPomodoroSection = (minutes, inputElement) => {
   secondInput.value = seconds;
 
   const minTimer = () => {
-
     if (minutes >= 10) {
-        minutes -= 1
+      minutes -= 1;
       inputElement.value = minutes;
     } else {
       minutes -= 1;
@@ -172,7 +167,7 @@ const startPomodoroSection = (minutes, inputElement) => {
     if (seconds >= 10) {
       secondInput.value = seconds;
     } else {
-        secondInput.value = "0" + seconds;
+      secondInput.value = "0" + seconds;
     }
 
     if (seconds <= 0) {
@@ -182,9 +177,24 @@ const startPomodoroSection = (minutes, inputElement) => {
 
         bellAudio.play();
 
-        intervalTimer()
+        sessionCount++;
+
+        if (sessionCount === 2) {
+          bellAudio.play();
+          intervalText.classList.add("off");
+          sessionText.classList.remove("off");
+          intervalDuration.classList.add("off");
+          sessionDuration.classList.remove("off");
+          inputElement.setAttribute("readonly", false);
+          buttons.forEach((button) => {
+            button.disabled = false;
+          });
+          return;
+        }
+
+        intervalTimer();
       }
-      seconds = 60;
+      seconds = 59;
     }
   };
 
@@ -194,5 +204,5 @@ const startPomodoroSection = (minutes, inputElement) => {
 };
 
 btnPlay.addEventListener("click", () => {
-  startPomodoroSection(sessionDuration.value, sessionDuration)
+  startPomodoroSection(sessionDuration.value, sessionDuration);
 });
