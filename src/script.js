@@ -59,10 +59,6 @@ buttons.forEach((button) => {
   });
 });
 
-
-
-
-
 const validateMinutes = (input, event) => {
   const value = parseInt(event.target.value);
 
@@ -113,22 +109,36 @@ const intervalTimer = () => {
 
 let sessionCount = 0;
 
-let resetTimer = () => {
+let resetTimer = (inputElement) => {
   secondInput.value = 0;
-  breakLengthInput.value = 0;
-  sessionLengthInput.value = 0;
-  paragraphBreakLength.innerHTML = 0;
-  paragraphSessionLength.innerHTML = 0;
-  reset = true
+  breakLengthInput.value = 5;
+  sessionLengthInput.value = 25;
+  paragraphBreakLength.innerHTML = breakLengthInput.value
+  paragraphSessionLength.innerHTML = sessionLengthInput.value
+  intervalText.classList.add("off");
+  sessionText.classList.remove("off");
+  intervalDuration.classList.add("off");
+  sessionDuration.classList.remove("off");
+  sessionCount = 0
+
+  inputElement.removeAttribute('readonly')
+  btnPlay.disabled = false
+  boolean = false
+  buttons.forEach((button) => {
+    button.disabled = false;
+  });
+  reset = true;
 };
 
-btnReset.addEventListener("click", resetTimer);
+btnReset.addEventListener("click", () => {
+  resetTimer(sessionLengthInput)
+});
 
-let reset = false
-
+let reset = false;
 
 const startTimer = (minutes, inputElement) => {
 
+  reset = false
   if (boolean) {
     return;
   }
@@ -169,9 +179,9 @@ const startTimer = (minutes, inputElement) => {
     seconds -= 1;
 
     if (reset) {
-        clearInterval(min_interval);
-        clearInterval(seg_interval);
-        return
+      clearInterval(min_interval);
+      clearInterval(seg_interval);
+      return;
     }
 
     if (seconds >= 10) {
@@ -189,7 +199,7 @@ const startTimer = (minutes, inputElement) => {
 
         sessionCount++;
 
-        if (sessionCount === 2) {
+        if (sessionCount === 4) {
           bellAudio.play();
           intervalText.classList.add("off");
           sessionText.classList.remove("off");
@@ -199,6 +209,7 @@ const startTimer = (minutes, inputElement) => {
           buttons.forEach((button) => {
             button.disabled = false;
           });
+          alert('4 sesões')
           return;
         }
 
