@@ -1,4 +1,7 @@
 let sessionDuration = document.querySelector(".minutes");
+
+
+
 let intervalDuration = document.getElementById("interval-input");
 
 let secondInput = document.querySelector(".seconds");
@@ -13,7 +16,6 @@ const breakLengthInput = document.getElementById("interval-input");
 const btnPlay = document.querySelector(".btn-play");
 const btnReset = document.querySelector(".btn-reset");
 const buttons = document.querySelectorAll(".btn");
-console.log(buttons);
 
 let paragraphSessionLength = document.getElementById("session-length");
 const paragraphBreakLength = document.getElementById("break-length");
@@ -98,13 +100,38 @@ let bellAudio = new Audio("./audio/audio_bell.mp3");
 
 let boolean = false;
 
-const intervalTimer = () => {
-  sessionText.classList.add("off");
-  intervalText.classList.remove("off");
-  sessionDuration.classList.add("off");
-  intervalDuration.classList.remove("off");
+const sessionLength = sessionDuration.value
+const breakLength = intervalDuration.value
+
+
+const sessionTimer = (durationOfMinutes) => {
+
+  // sessionText.classList.add("off");
+  // intervalText.classList.remove("off");
+  // sessionDuration.classList.add("off");
+  // intervalDuration.classList.remove("off");
+
+  console.log(sessionDuration.value);
+  sessionText.classList.toggle("off");
+  intervalText.classList.toggle("off");
+  sessionDuration.classList.toggle("off");
+  intervalDuration.classList.toggle("off");
   boolean = false;
-  startTimer(intervalDuration.value, intervalDuration);
+  startTimer(durationOfMinutes, intervalDuration);
+};
+
+
+const intervalTimer = (durationOfMinutes) => {
+  // sessionText.classList.add("off");
+  // intervalText.classList.remove("off");
+  // sessionDuration.classList.add("off");
+  // intervalDuration.classList.remove("off");
+  sessionText.classList.toggle("off");
+  intervalText.classList.toggle("off");
+  sessionDuration.classList.toggle("off");
+  intervalDuration.classList.toggle("off");
+  boolean = false;
+  startTimer(durationOfMinutes, intervalDuration);
 };
 
 let sessionCount = 0;
@@ -113,17 +140,17 @@ let resetTimer = (inputElement) => {
   secondInput.value = 0;
   breakLengthInput.value = 5;
   sessionLengthInput.value = 25;
-  paragraphBreakLength.innerHTML = breakLengthInput.value
-  paragraphSessionLength.innerHTML = sessionLengthInput.value
+  paragraphBreakLength.innerHTML = breakLengthInput.value;
+  paragraphSessionLength.innerHTML = sessionLengthInput.value;
   intervalText.classList.add("off");
   sessionText.classList.remove("off");
   intervalDuration.classList.add("off");
   sessionDuration.classList.remove("off");
-  sessionCount = 0
+  sessionCount = 0;
 
-  inputElement.removeAttribute('readonly')
-  btnPlay.disabled = false
-  boolean = false
+  inputElement.removeAttribute("readonly");
+  btnPlay.disabled = false;
+  boolean = false;
   buttons.forEach((button) => {
     button.disabled = false;
   });
@@ -131,14 +158,23 @@ let resetTimer = (inputElement) => {
 };
 
 btnReset.addEventListener("click", () => {
-  resetTimer(sessionLengthInput)
+  resetTimer(sessionLengthInput);
 });
 
 let reset = false;
 
+
+let hasMinutes = false 
+
 const startTimer = (minutes, inputElement) => {
 
-  reset = false
+  if(!hasMinutes) {
+    var sessionLength = sessionDuration.value
+    var breakLength = intervalDuration.value
+    hasMinutes = true
+  }
+
+  reset = false;
   if (boolean) {
     return;
   }
@@ -209,18 +245,21 @@ const startTimer = (minutes, inputElement) => {
           buttons.forEach((button) => {
             button.disabled = false;
           });
-          alert('4 sesões')
+          alert(`sessão: ${sessionCount}`);
           return;
         }
 
-        intervalTimer();
+        if (sessionCount % 2 !== 0) {
+          intervalTimer(breakLength);
+        } else {
+          sessionTimer(sessionLength);
+        }
       }
       seconds = 59;
     }
   };
 
   const min_interval = setInterval(minTimer, 60000);
-  console.log(min_interval);
   const seg_interval = setInterval(segTimer, 1000);
 };
 
