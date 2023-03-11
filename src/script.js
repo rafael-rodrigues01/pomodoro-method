@@ -59,15 +59,9 @@ buttons.forEach((button) => {
   });
 });
 
-const reset = () => {
-  secondInput.value = 0;
-  breakLengthInput.value = 0;
-  sessionLengthInput.value = 0;
-  paragraphBreakLength.innerHTML = 0;
-  paragraphSessionLength.innerHTML = 0;
-};
 
-btnReset.addEventListener("click", reset);
+
+
 
 const validateMinutes = (input, event) => {
   const value = parseInt(event.target.value);
@@ -114,21 +108,31 @@ const intervalTimer = () => {
   sessionDuration.classList.add("off");
   intervalDuration.classList.remove("off");
   boolean = false;
-  startPomodoroSection(intervalDuration.value, intervalDuration);
+  startTimer(intervalDuration.value, intervalDuration);
 };
 
 let sessionCount = 0;
 
-const startPomodoroSection = (minutes, inputElement) => {
+let resetTimer = () => {
+  secondInput.value = 0;
+  breakLengthInput.value = 0;
+  sessionLengthInput.value = 0;
+  paragraphBreakLength.innerHTML = 0;
+  paragraphSessionLength.innerHTML = 0;
+  reset = true
+};
+
+btnReset.addEventListener("click", resetTimer);
+
+let reset = false
+
+
+const startTimer = (minutes, inputElement) => {
+
   if (boolean) {
     return;
   }
   boolean = true;
-
-  // let min = document.querySelector('.minutes').value
-  // localStorage.setItem("inputElement", String(inputElement.value));
-
-  // let min = Number(localStorage.getItem("inputElement"));
 
   if (minutes == 0) {
     inputElement.value = "0" + 0;
@@ -163,6 +167,12 @@ const startPomodoroSection = (minutes, inputElement) => {
 
   const segTimer = () => {
     seconds -= 1;
+
+    if (reset) {
+        clearInterval(min_interval);
+        clearInterval(seg_interval);
+        return
+    }
 
     if (seconds >= 10) {
       secondInput.value = seconds;
@@ -204,5 +214,5 @@ const startPomodoroSection = (minutes, inputElement) => {
 };
 
 btnPlay.addEventListener("click", () => {
-  startPomodoroSection(sessionDuration.value, sessionDuration);
+  startTimer(sessionDuration.value, sessionDuration);
 });
