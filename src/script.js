@@ -1,7 +1,5 @@
 let sessionDuration = document.querySelector(".minutes");
 
-
-
 let intervalDuration = document.getElementById("interval-input");
 
 let secondInput = document.querySelector(".seconds");
@@ -100,18 +98,7 @@ let bellAudio = new Audio("./audio/audio_bell.mp3");
 
 let boolean = false;
 
-const sessionLength = sessionDuration.value
-const breakLength = intervalDuration.value
-
-
 const sessionTimer = (durationOfMinutes) => {
-
-  // sessionText.classList.add("off");
-  // intervalText.classList.remove("off");
-  // sessionDuration.classList.add("off");
-  // intervalDuration.classList.remove("off");
-
-  console.log(sessionDuration.value);
   sessionText.classList.toggle("off");
   intervalText.classList.toggle("off");
   sessionDuration.classList.toggle("off");
@@ -120,12 +107,7 @@ const sessionTimer = (durationOfMinutes) => {
   startTimer(durationOfMinutes, intervalDuration);
 };
 
-
 const intervalTimer = (durationOfMinutes) => {
-  // sessionText.classList.add("off");
-  // intervalText.classList.remove("off");
-  // sessionDuration.classList.add("off");
-  // intervalDuration.classList.remove("off");
   sessionText.classList.toggle("off");
   intervalText.classList.toggle("off");
   sessionDuration.classList.toggle("off");
@@ -163,15 +145,13 @@ btnReset.addEventListener("click", () => {
 
 let reset = false;
 
-
-let hasMinutes = false 
+let hasMinutes = false;
 
 const startTimer = (minutes, inputElement) => {
-
-  if(!hasMinutes) {
-    var sessionLength = sessionDuration.value
-    var breakLength = intervalDuration.value
-    hasMinutes = true
+  if (!hasMinutes) {
+    var sessionLength = sessionDuration.value;
+    var breakLength = intervalDuration.value;
+    hasMinutes = true;
   }
 
   reset = false;
@@ -235,19 +215,25 @@ const startTimer = (minutes, inputElement) => {
 
         sessionCount++;
 
-        if (sessionCount === 4) {
+        if (sessionCount === 2) {
           bellAudio.play();
-          intervalText.classList.add("off");
-          sessionText.classList.remove("off");
-          intervalDuration.classList.add("off");
-          sessionDuration.classList.remove("off");
-          inputElement.setAttribute("readonly", false);
+          // intervalText.classList.add("off");
+          // sessionText.classList.remove("off");
+          // intervalDuration.classList.add("off");
+          // sessionDuration.classList.remove("off");
+          // console.log(inputElement);
+          sessionText.classList.toggle("off");
+          intervalText.classList.toggle("off");
+          sessionDuration.classList.toggle("off");
+          intervalDuration.classList.toggle("off");
+          sessionDuration.removeAttribute("readonly");
           buttons.forEach((button) => {
             button.disabled = false;
           });
-          alert(`sessão: ${sessionCount}`);
           return;
         }
+
+        console.log(sessionCount);
 
         if (sessionCount % 2 !== 0) {
           intervalTimer(breakLength);
