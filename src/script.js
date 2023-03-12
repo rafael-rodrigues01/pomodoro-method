@@ -217,11 +217,6 @@ const startTimer = (minutes, inputElement) => {
 
         if (sessionCount === 2) {
           bellAudio.play();
-          // intervalText.classList.add("off");
-          // sessionText.classList.remove("off");
-          // intervalDuration.classList.add("off");
-          // sessionDuration.classList.remove("off");
-          // console.log(inputElement);
           sessionText.classList.toggle("off");
           intervalText.classList.toggle("off");
           sessionDuration.classList.toggle("off");
