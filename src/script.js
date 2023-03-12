@@ -228,8 +228,6 @@ const startTimer = (minutes, inputElement) => {
           return;
         }
 
-        console.log(sessionCount);
-
         if (sessionCount % 2 !== 0) {
           intervalTimer(breakLength);
         } else {
